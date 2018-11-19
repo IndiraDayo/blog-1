@@ -3,11 +3,12 @@ const express = require('express'),
       mongoose = require('mongoose'),
       cors = require('cors'),
       db = mongoose.connection,
-      dbURI = ``
+      dbURI = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds155653.mlab.com:55653/blog`
       dbLOCAL =`mongodb://localhost:27017/blog-test`
 
       app = express(),
       port = process.env.PORT || 3000
+
 
 mongoose
     .connect(dbLOCAL, {useNewUrlParser:true})
@@ -17,7 +18,10 @@ db
         console.log('database connected')
     });
 
-const loginRouter = require('./routes/login')
+
+
+const loginRouter = require('./routes/login'),
+      articleRouter = require('./routes/article')
 
 app
     .use(express.urlencoded({extended: false}))
@@ -25,6 +29,7 @@ app
     .use(cors())
 
     .use('/', loginRouter)
+    .use('/', articleRouter)
 
 
     .listen(port, () => {

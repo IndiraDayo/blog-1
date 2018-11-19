@@ -23,7 +23,7 @@ const userSchema = new Schema({
         lowercase: true,
         unique: true,
         required: [true, 'Email must be filled'],
-        validate: [validateEmail, 'Email is not written in email format']
+        validate: [validateEmail, 'Email is not written in email format'] 
         // match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Email is not written in email format']
     },
     password: {
@@ -38,10 +38,12 @@ const userSchema = new Schema({
         }
     },
     image: {
-        type: String
+        type: String,
+        default: 'https://us.123rf.com/450wm/triken/triken1608/triken160800028/61320729-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg?ver=6'
     },
     role: {
-        type: String
+        type: String,
+        default: 'user'
     },
     article_list: [{
         type: Schema.Types.ObjectId,
@@ -52,16 +54,8 @@ const userSchema = new Schema({
 })
 
 
-// userSchema.pre('validate', function(next) {
-//     if (this.password.length < 6) {
-//         next(new Error('Password must be more than 5 characters'));
-//     } else {
-//         next();
-//     }
-// });
-
 userSchema.post('validate', function() {
-    this.password = hash.bcencode(this.password)
+    this.password = hash.bcencode(this.password, Number(process.env.SECRET_SALT))
 });
 
 

@@ -58,3 +58,24 @@ userRef.on('value', snapshot => {    // in yang buat realtime
 userRef.once('value', snapshot => { // untuk ga buat realtime... cuma sekali
     dll
 })
+
+
+
+
+VUEX
+
+
+state management for vue
+
+
+di store ada data_student =['hai', 'aku', 'kebelet']
+
+
+buat get data dari store buat function di computed
+
+di dalem nya return this.$store.state.data_student
+
+// mapState
+
+add ke state:
+
